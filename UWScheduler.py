@@ -1,10 +1,5 @@
-from uwaterlooapi import UWaterlooAPI
-from pprint import pprint
-import json
-import UWHttp
 import UWHttpParse
 import UWDB
-import Course
 
 # term = ayym
 # a = (0, before 2000, or 1, after 2000)

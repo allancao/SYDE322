@@ -20,4 +20,12 @@ class CourseSchedule(object):
         self.start_date = start_date
         self.end_date = end_date
 
+    def __str__(self):
+
+        ret = 'subject={}, catalog_number={}, section={}, start_time={}, ' \
+              'end_time={}, weekdays={}, start_date={}, end_date={}'\
+            .format(self.subject, self.catalog_number, self.section, self.start_time,
+                    self.end_time, self.weekdays, self.start_date, self.end_date)
+
+        return ret
 

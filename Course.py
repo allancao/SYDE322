@@ -15,4 +15,13 @@ class Course(object):
         self.description = description
         self.prerequisites = prerequisites
 
+    def __str__(self):
+        ret = 'course_id={}, subject={}, catalog_number={}, ' \
+              'title={}, description={}, prerequisites={}'.format(self.course_id,
+                                                                  self.subject,
+                                                                  self.catalog_number,
+                                                                  self.title,
+                                                                  self.description,
+                                                                  self.prerequisites)
 
+        return ret

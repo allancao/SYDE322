@@ -1,5 +1,4 @@
 import MySQLdb
-from Course import Course
 
 
 def insert(table, cols, values):
@@ -26,7 +25,7 @@ def insert(table, cols, values):
     db.close()
 
 
-def select(table, cols, where_clause):
+def select(table, cols_values, values):
     db = MySQLdb.connect(host="localhost",
                          user="root",
                          passwd="admin",
@@ -36,22 +35,29 @@ def select(table, cols, where_clause):
     # query = 'SET SQL_SAFE_UPDATES=0;'
     query = ''
 
-    cols_constructor = ','.join(cols)
-    if len(where_clause) > 0:
-        where_clause_constructor = ' AND '.join(where_clause)
-        query += 'SELECT {} FROM {} WHERE {};'.format(table, cols_constructor, where_clause_constructor)
+    if cols_values:
+
+        where_clause_constructor = []
+        for i in range(0, len(values)):
+            where_clause_constructor.append('{}={}'.format(cols_values[i], values[i]))
+        where_clause_constructor = ' AND '.join(where_clause_constructor)
+
+        query += 'SELECT * FROM {} WHERE {};'.format(table, where_clause_constructor)
         print(query)
         cur.execute(query)
     else:
-        query += 'SELECT {} FROM {};'.format(cols_constructor, table)
+        query += 'SELECT * FROM {};'.format(table)
         print(query)
         cur.execute(query)
 
+    ret = []
     for row in cur.fetchall():
-        print row
+        ret.append(row)
 
     db.commit()
     db.close()
+
+    return ret
 
 
 def update(table, cols, values, where_clause):
