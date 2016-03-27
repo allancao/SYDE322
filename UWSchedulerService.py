@@ -145,12 +145,39 @@ def insert_account_courses(student_id=None, subject=None, catalog_number=None,
     UWDB.insert(uw_accounts, cols_values, values)
 
 
+def delete_account_courses(student_id=None, subject=None, catalog_number=None,
+                           section=None, first_name=None, last_name=None):
+
+    values = filter(None, [student_id, subject, catalog_number,
+                           section, first_name, last_name])
+
+    cols_values = []
+
+    if student_id:
+        cols_values.append('student_id')
+    if subject:
+        cols_values.append('subject')
+    if catalog_number:
+        cols_values.append('catalog_number')
+    if section:
+        cols_values.append('section')
+    if first_name:
+        cols_values.append('first_name')
+    if last_name:
+        cols_values.append('last_name')
+
+    values = sanitate(values)
+    UWDB.delete(uw_accounts, cols_values, values)
+
+
 insert_account_courses(student_id='20420902', subject='SYDE', catalog_number='322',
                        section='LEC 001', first_name='Allan', last_name='Cao')
 
 list = get_account_courses(student_id='20420902')
 for i in list:
     print(i)
+
+delete_account_courses(student_id='20420902')
 
 # list = get_course(subject='SYDE', catalog_number='322')
 # for i in list:

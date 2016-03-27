@@ -95,7 +95,7 @@ def update(table, cols, values, where_clause):
     db.close()
 
 
-def delete(table, where_clause):
+def delete(table, cols_values, values):
     db = MySQLdb.connect(host="localhost",
                          user="root",
                          passwd="admin",
@@ -105,7 +105,10 @@ def delete(table, where_clause):
     # query = 'SET SQL_SAFE_UPDATES=0;'
     query = ''
 
-    where_clause_constructor = ' AND '.join(where_clause)
+    where_clause_constructor = []
+    for i in range(0, len(values)):
+        where_clause_constructor.append('{}={}'.format(cols_values[i], values[i]))
+    where_clause_constructor = ' AND '.join(where_clause_constructor)
     query += 'DELETE FROM {} WHERE {};'.format(table, where_clause_constructor)
     print(query)
     cur.execute(query)
