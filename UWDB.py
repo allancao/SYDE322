@@ -1,20 +1,23 @@
 import MySQLdb
 from Course import Course
 
-db = MySQLdb.connect(host="localhost",
-                     user="root",
-                     passwd="admin",
-                     db="uwcoursedb")
-
 
 def insert(table, cols, values):
+    db = MySQLdb.connect(host="localhost",
+                         user="root",
+                         passwd="admin",
+                         db="uwcoursedb")
 
     cur = db.cursor()
     # query = 'SET SQL_SAFE_UPDATES=0;'
     query = ''
-
     cols_constructor = ','.join(cols)
     values_constructor = ','.join(values)
+    # values_constructor = ''
+    # for value in values:
+    #     values_constructor += ('\"{}\",'.format(value))
+    # values_constructor = values_constructor[:-1]
+
     query += 'INSERT INTO {} ({}) VALUES ({});'.format(table, cols_constructor, values_constructor)
     print(query)
     cur.execute('INSERT INTO {} ({}) VALUES ({});'.format(table, cols_constructor, values_constructor))
@@ -24,6 +27,10 @@ def insert(table, cols, values):
 
 
 def select(table, cols, where_clause):
+    db = MySQLdb.connect(host="localhost",
+                         user="root",
+                         passwd="admin",
+                         db="uwcoursedb")
 
     cur = db.cursor()
     # query = 'SET SQL_SAFE_UPDATES=0;'
@@ -48,6 +55,10 @@ def select(table, cols, where_clause):
 
 
 def update(table, cols, values, where_clause):
+    db = MySQLdb.connect(host="localhost",
+                         user="root",
+                         passwd="admin",
+                         db="uwcoursedb")
 
     cur = db.cursor()
     # query = 'SET SQL_SAFE_UPDATES=0;'
@@ -79,6 +90,10 @@ def update(table, cols, values, where_clause):
 
 
 def delete(table, where_clause):
+    db = MySQLdb.connect(host="localhost",
+                         user="root",
+                         passwd="admin",
+                         db="uwcoursedb")
 
     cur = db.cursor()
     # query = 'SET SQL_SAFE_UPDATES=0;'
@@ -86,6 +101,24 @@ def delete(table, where_clause):
 
     where_clause_constructor = ' AND '.join(where_clause)
     query += 'DELETE FROM {} WHERE {};'.format(table, where_clause_constructor)
+    print(query)
+    cur.execute(query)
+
+    db.commit()
+    db.close()
+
+
+def truncate(table):
+    db = MySQLdb.connect(host="localhost",
+                         user="root",
+                         passwd="admin",
+                         db="uwcoursedb")
+
+    cur = db.cursor()
+    # query = 'SET SQL_SAFE_UPDATES=0;'
+    query = ''
+
+    query += 'TRUNCATE TABLE {};'.format(table)
     print(query)
     cur.execute(query)
 
@@ -101,5 +134,5 @@ def delete(table, where_clause):
 #        [course.course_id, course.subject, course.catalog_number, course.title, course.description,
 #         course.prerequisite])
 # update('uwcoursedb.uwcourses', ['courseID'], ['"22229"'], ['catalogNumber="522"'])
-delete('uwcoursedb.uwcourses', ['course_id="123456"'])
+# delete('uwcoursedb.uwcourses', ['course_id="123456"'])
 

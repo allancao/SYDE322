@@ -14,10 +14,16 @@ def get_course(subject, catalogue_number):
 
 
 def get_all_courses_by_term(term):
-    course_url = '/terms/{}/courses'.format(term)
+    course_url = '/terms/{}/courses.json'.format(term)
     req = requests.get(base_url.format(course_url), params=payload)
     return req.json()
 
-print(get_course('SYDE', '522'))
+
+def get_course_schedule(subject, catalog_number):
+    course_url = '/courses/{}/{}/schedule.json'.format(subject, catalog_number)
+    req = requests.get(base_url.format(course_url), params=payload)
+    return req.json()
+
+print(get_course('ACC', '607'))
 
 
