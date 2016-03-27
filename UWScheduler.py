@@ -68,4 +68,4 @@ def init_load_all_schedules():
 
 
 init_load_all_schedules()
-init_load_all_courses()
+# init_load_all_courses()

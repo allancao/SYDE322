@@ -24,6 +24,6 @@ def get_course_schedule(subject, catalog_number):
     req = requests.get(base_url.format(course_url), params=payload)
     return req.json()
 
-print(get_course('ACC', '607'))
+print(get_course_schedule('SYDE', '322'))
 
 

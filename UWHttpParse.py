@@ -54,33 +54,33 @@ def parse_course_schedule(subject, catalog_number):
     course_schedules = []
 
     for schedule in data:
+        section = json.dumps(schedule['section'])
         if 'classes' in schedule:
-            section = json.dumps(schedule['section'])
+            for schedule_class in schedule['classes']:
 
-            course_classes = schedule['classes'][0]
-            start_time = json.dumps(course_classes['date']['start_time'])
-            end_time = json.dumps(course_classes['date']['end_time'])
-            weekdays = json.dumps(course_classes['date']['weekdays'])
-            start_date = json.dumps(course_classes['date']['start_date'])
-            end_date = json.dumps(course_classes['date']['end_date'])
+                start_time = json.dumps(schedule_class['date']['start_time'])
+                end_time = json.dumps(schedule_class['date']['end_time'])
+                weekdays = json.dumps(schedule_class['date']['weekdays'])
+                start_date = json.dumps(schedule_class['date']['start_date'])
+                end_date = json.dumps(schedule_class['date']['end_date'])
 
-            # print(section)
-            # print(catalog_number)
-            # print(start_time)
-            # print(end_time)
-            # print(weekdays)
-            # print(start_date)
-            # print(end_date)
+                # print(section)
+                # print(catalog_number)
+                # print(start_time)
+                # print(end_time)
+                # print(weekdays)
+                # print(start_date)
+                # print(end_date)
 
-            if start_time is not 'null' and end_time is not 'null' \
-                    and weekdays is not 'null':
-                course_schedule = CourseSchedule.CourseSchedule(subject, catalog_number,
-                                                                section, start_time,
-                                                                end_time, weekdays,
-                                                                start_date, end_date)
+                if start_time is not 'null' and end_time is not 'null' \
+                        and weekdays is not 'null':
+                    course_schedule = CourseSchedule.CourseSchedule(subject, catalog_number,
+                                                                    section, start_time,
+                                                                    end_time, weekdays,
+                                                                    start_date, end_date)
 
-                course_schedules.append(course_schedule)
+                    course_schedules.append(course_schedule)
 
-        return course_schedules
+    return course_schedules
 
-# print(parse_course_schedule('AFM', '102'))
+print(parse_course_schedule('SYDE', '322'))
