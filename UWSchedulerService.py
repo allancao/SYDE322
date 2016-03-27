@@ -2,9 +2,11 @@ import json
 import UWDB
 import Course
 import CourseSchedule
+import UWAccount
 
 uw_courses = 'uwcoursedb.uwcourses'
 uw_course_schedule = 'uwcoursedb.courseschedule'
+uw_accounts = 'uwcoursedb.uwaccounts'
 
 
 def sanitate(values):
@@ -85,7 +87,68 @@ def get_course_schedule(subject=None, catalog_number=None, section=None,
     return ret
 
 
-list = get_course_schedule(subject='SYDE', catalog_number='322')
+def get_account_courses(student_id=None, subject=None, catalog_number=None,
+                        section=None, first_name=None, last_name=None):
+    values = filter(None, [student_id, subject, catalog_number,
+                           section, first_name, last_name])
+
+    cols_values = []
+
+    if student_id:
+        cols_values.append('student_id')
+    if subject:
+        cols_values.append('subject')
+    if catalog_number:
+        cols_values.append('catalog_number')
+    if section:
+        cols_values.append('section')
+    if first_name:
+        cols_values.append('first_name')
+    if last_name:
+        cols_values.append('last_name')
+
+    values = sanitate(values)
+    rows = UWDB.select(uw_accounts, cols_values, values)
+    rows = ['' if x is None else x for x in rows]
+    ret = []
+
+    for row in rows:
+        uw_account = UWAccount.UWAccount(row[0], row[1], row[2],
+                                         row[3], row[4], row[5])
+        ret.append(uw_account)
+
+    return ret
+
+
+def insert_account_courses(student_id=None, subject=None, catalog_number=None,
+                           section=None, first_name=None, last_name=None):
+
+    values = filter(None, [student_id, subject, catalog_number,
+                           section, first_name, last_name])
+
+    cols_values = []
+
+    if student_id:
+        cols_values.append('student_id')
+    if subject:
+        cols_values.append('subject')
+    if catalog_number:
+        cols_values.append('catalog_number')
+    if section:
+        cols_values.append('section')
+    if first_name:
+        cols_values.append('first_name')
+    if last_name:
+        cols_values.append('last_name')
+
+    values = sanitate(values)
+    UWDB.insert(uw_accounts, cols_values, values)
+
+
+insert_account_courses(student_id='20420902', subject='SYDE', catalog_number='322',
+                       section='LEC 001', first_name='Allan', last_name='Cao')
+
+list = get_account_courses(student_id='20420902')
 for i in list:
     print(i)
 
