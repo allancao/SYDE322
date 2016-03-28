@@ -142,24 +142,24 @@ def get_course_schedule_by_time(subject=None, catalog_number=None, section=None,
         current_start_time = datetime.datetime.strptime(schedule.start_time, time_format)
         current_end_time = datetime.datetime.strptime(schedule.end_time, time_format)
 
-        if target_start_time >= current_start_time or target_end_time <= current_end_time:
+        if target_start_time > current_start_time or target_end_time < current_end_time:
             remove.append(schedule)
         else:
             same_course_sections = get_course_schedule(subject=schedule.subject,
-                                                       catalog_number=schedule.catalog_number,
-                                                       section=schedule.section)
+                                                       catalog_number=schedule.catalog_number)
 
             for same_course_section in same_course_sections:
                 current_section_start_time = \
                     datetime.datetime.strptime(same_course_section.start_time, time_format)
                 current_section_end_time = \
                     datetime.datetime.strptime(same_course_section.end_time, time_format)
-                if target_start_time >= current_section_start_time or \
-                        target_end_time <= current_section_end_time:
+                if target_start_time > current_section_start_time or \
+                        target_end_time < current_section_end_time:
                     remove.extend(same_course_sections)
 
     for schedule in remove:
-        temp.remove(schedule)
+        if schedule in temp:
+            temp.remove(schedule)
     return temp
 
 
@@ -218,7 +218,7 @@ def delete_account_courses(student_id=None, subject=None, catalog_number=None,
 #                        section='LEC 001', first_name='Allan', last_name='Cao')
 
 list = get_course_schedule_by_time(subject='SYDE', catalog_number='322', section=None,
-                                   start_time='00:00', end_time='23:59', weekdays=None,
+                                   start_time='14:20', end_time='18:59', weekdays=None,
                                    start_date=None, end_date=None)
 
 for i in list:
