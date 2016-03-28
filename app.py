@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, json, url_for, redirect
+from flask import Flask
+from flask import render_template, request, jsonify, url_for, redirect, make_response
+import json
 import UWSchedulerService
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,14 +14,13 @@ def loginUser():
      # read the posted values from the UI
     _username = request.form['inputName']
     _password = request.form['inputPassword']
-    print _username
-    print _password
     #validate the received values
+    print(_username)
+    print(_password)
     if _username and _password:
         return redirect('/search')
     else:
         return json.dumps({'html':'<span>Enter the required fields</span>'})
-
 
 @app.route('/search')
 def search():
@@ -28,20 +30,19 @@ def search():
 def search_result():
   _subject = str(request.form['subject'])
   _catalogNo = str(request.form['catalogNo'])
-  _time = request.form['time']
+  _startTime = str(request.form['startTime'])
+  _endTime = str(request.form['endTime'])
+  _weekday = str(request.form.getlist('check'))
 
-  courses = UWSchedulerService.get_course(subject = _subject, catalog_number = _catalogNo )
-  for i in courses:
-    print(i)
-
-  getSchedule  = UWSchedulerService.get_course_schedule(subject = _subject, catalog_number = _catalogNo)
-  for i in getSchedule:
-    print(i)
-
-
-@app.route('/Schedule', methods = ['GET'])
+@app.route('/schedule')
 def show_schedule():
-  "Youre showing the Schedule"
+  return render_template('schedule.html')
+
+@app.route('/scheduleData')
+def formulate_data():
+  return data
+
+
 
 if __name__ == '__main__':
     app.run()

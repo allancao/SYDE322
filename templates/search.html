@@ -19,8 +19,8 @@
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" ><a href="main">Home</a></li>
-            <li role="presentation" class="active"><a href="#">Search</a></li>
+            <li role="presentation" ><a href="schedule">Schedule</a></li>
+            <li role="presentation" class="active"><a href="search">Search</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">UW Scheduler</h3>
@@ -29,15 +29,45 @@
       <div class="jumbotron">
         <h1>Search for Classes</h1>
         <form class="form-signin">
-        <label for="subject" class="sr-only">Subject</label>
-        <input type="name" name="subject" id="subject" class="form-control" placeholder="Subject" required autofocus>
-        <label for="catalogNo" class="sr-only">Catalog Number</label>
-        <input type="name" name="catalogNo" id="catalogNo" class="form-control" placeholder="Catalog Number" required autofocus>
-        <label for="time" class="sr-only">Time</label>
-        <input type="name" name="time" id="time" class="form-control" placeholder="Time" required>
-
-        <button id="btnSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
-      </form>
+          <label for="subject" class="sr-only">Subject</label>
+          <input type="name" name="subject" id="subject" class="form-control" placeholder="Subject" required autofocus>
+          <label for="catalogNo" class="sr-only">Catalog Number</label>
+          <input type="name" name="catalogNo" id="catalogNo" class="form-control" placeholder="Catalog Number" required autofocus>
+          <label for="startTime" class="sr-only">Start Time</label>
+          <input type="startTime" name="startTime" id="startTime" class="form-control" placeholder="Start Time (00:00)" required>
+          <label for="endTime" class="sr-only">End Time</label>
+          <input type="endTime" name="endTime" id="endTime" class="form-control" placeholder="End Time (23:59)" required>
+          <div class="container">
+            <div class="row">
+                <label class="col-md-12 control-label" for="checkboxes">Day(s) of  Week</label>
+            </div>
+            <div class="row ">
+              <div class="form-group centered">
+                <label class="col-md-2.5 checkbox-inline" for="mon">
+                  <input type="checkbox" name="check" id="mon" value="M">
+                  Mo
+                </label>
+                <label class="col-md-2.5 checkbox-inline" for="tu">
+                  <input type="checkbox" name="check" id="tu" value="T">
+                  Tu
+                </label>
+                <label class="col-md-2.5 checkbox-inline" for="wed">
+                  <input type="checkbox" name="check" id="wed" value="W">
+                  We
+                </label>
+                <label class="col-md-2.5 checkbox-inline" for="thu">
+                  <input type="checkbox" name="check" id="thu" value="Th">
+                  Th
+                </label>
+                <label class="col-md-2.5 checkbox-inline" for="fri">
+                  <input type="checkbox" name="check" id="fri" value="F">
+                  Fr
+                </label>
+              </div>
+            </div>
+          </div>
+          <button id="btnSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
+        </form>
       </div>
 
 
