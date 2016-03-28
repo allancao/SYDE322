@@ -1,13 +1,16 @@
 $(function(){
-$('#btnSearch').click(function() {
+  $('#btnSearch').click(function(){
+
+    var data = $('form').serialize();
+    console.log(data);
     $.ajax({
-      url:'/searchResult',
-      data:$('form').serialize(),
-      type:'POST',
-      success:function(response) {
-        window.location.href()
+      url: '/searchResult',
+      data: data,
+      type: 'POST',
+      success: function(response){
+        console.log(response)
       },
-      error: function(error) {
+      error: function(error){
         console.log(error);
       }
     });
