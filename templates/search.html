@@ -2,17 +2,19 @@
 <html lang="en">
   <head>
     <title>Search for Classes</title>
- 
-    
+
+
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
+
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/search.css" rel="stylesheet">
-    
+    <script src="../static/js/jquery-1.12.2.js"></script>
+    <script src="../static/js/search.js"></script>
+
   </head>
- 
+
   <body>
- 
+
     <div class="container">
       <div class="header">
         <nav>
@@ -24,27 +26,27 @@
         </nav>
         <h3 class="text-muted">UW Scheduler</h3>
       </div>
- 
+
       <div class="jumbotron">
         <h1>Search for Classes</h1>
         <form class="form-signin">
-        <label for="inputName" class="sr-only">Subject</label>
-        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Subject" required autofocus>
-        <label for="inputEmail" class="sr-only">Catalog Number</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Catalog Number" required autofocus>
-        <label for="inputPassword" class="sr-only">Time</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Time" required>
-         
-        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
+        <label for="subject" class="sr-only">Subject</label>
+        <input type="name" name="subject" id="subject" class="form-control" placeholder="Subject" required autofocus>
+        <label for="catalogNo" class="sr-only">Catalog Number</label>
+        <input type="name" name="catalogNo" id="catalogNo" class="form-control" placeholder="Catalog Number" required autofocus>
+        <label for="time" class="sr-only">Time</label>
+        <input type="name" name="time" id="time" class="form-control" placeholder="Time" required>
+
+        <button id="btnSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
       </form>
       </div>
- 
-       
- 
+
+
+
       <footer class="footer">
         <p>&copy; Company 2015</p>
       </footer>
- 
+
     </div>
   </body>
 </html>

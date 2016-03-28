@@ -78,12 +78,12 @@ def get_course_schedule(subject=None, catalog_number=None, section=None,
     rows = UWDB.select(uw_course_schedule, cols_values, values)
     rows = ['' if x is None else x for x in rows]
     ret = []
-    
+
     for row in rows:
         course_schedule = CourseSchedule.CourseSchedule(row[0], row[1], row[2], row[3],
                                                         row[4], row[5], row[6], row[7])
         ret.append(course_schedule)
-    
+
     return ret
 
 
@@ -170,18 +170,18 @@ def delete_account_courses(student_id=None, subject=None, catalog_number=None,
     UWDB.delete(uw_accounts, cols_values, values)
 
 
-insert_account_courses(student_id='20420902', subject='SYDE', catalog_number='322',
-                       section='LEC 001', first_name='Allan', last_name='Cao')
+# insert_account_courses(student_id='20420902', subject='SYDE', catalog_number='322',
+                       # section='LEC 001', first_name='Allan', last_name='Cao')
 
-list = get_account_courses(student_id='20420902')
-for i in list:
-    print(i)
-
-delete_account_courses(student_id='20420902')
-
-# list = get_course(subject='SYDE', catalog_number='322')
+# list = get_account_courses(student_id='20420902')
 # for i in list:
 #     print(i)
+
+# delete_account_courses(student_id='20420902')
+
+list = get_course(subject='SYDE', catalog_number='322')
+for i in list:
+    print(i)
 
 # get_course(course_id=json.dumps('10000'), subject='subject', catalog_number='catalog_number',
 #            title=None, description='description', prerequisites='prereq')
