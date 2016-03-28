@@ -1,9 +1,12 @@
 from flask import Flask
-from flask import render_template, request, jsonify, url_for, redirect, make_response
+from flask import request, render_template, jsonify, url_for, redirect, make_response
 import json
 import UWSchedulerService
 
 app = Flask(__name__)
+
+global data
+
 
 @app.route('/')
 def login():
@@ -14,9 +17,7 @@ def loginUser():
      # read the posted values from the UI
     _username = request.form['inputName']
     _password = request.form['inputPassword']
-    #validate the received values
-    print(_username)
-    print(_password)
+    # validate the received values
     if _username and _password:
         return redirect('/search')
     else:
@@ -32,18 +33,21 @@ def show_schedule():
 
 @app.route('/scheduleData')
 def formulate_data():
-  return data
+    return json.dumps(data)
 
 @app.route('/searchResult', methods=['POST'])
 def search_result():
   _subject = str(request.form['subject'])
   _catalogNo = str(request.form['catalogNo'])
+  _startTime = str(request.form['startTime'])
+  _endTime = str(request.form['endTime'])
+  # _days = str(request.form.getlist('check'))
 
+  # getSchedule  = UWSchedulerService.get_course_schedule(subject = _subject, catalog_number = _catalogNo)
+  getCoursesByTime = UWSchedulerService.get_course_schedule_by_time(subject = _subject, catalog_number = _catalogNo, start_time = _startTime, end_time = _endTime)
   data = []
 
-  getSchedule  = UWSchedulerService.get_course_schedule(subject = _subject, catalog_number = _catalogNo)
-  for i in getSchedule:
-
+  for i in getCoursesByTime:
     info = ''
     days = []
     dayz = ''
@@ -74,13 +78,15 @@ def search_result():
 
     info = i.subject + ' ' + i.catalog_number + ' ' + i.section
 
-
-    course_info = json.dumps({"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz},sort_keys=True, indent=4)
+    course_info = {"title":info, "start_time":i.start_time, "end_time":i.end_time};
     data.append(course_info)
+    # course_info = json.dumps({"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz},sort_keys=True, indent=4)
+    # data.append(course_info)
 
   print data
-
-
+  return json.dumps(data)
 
 if __name__ == '__main__':
     app.run()
+
+

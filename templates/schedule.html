@@ -19,13 +19,18 @@
           header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'agendaWeek'
           },
+          allDaySlot: 'false',
+          minTime: "08:00:00",
+          maxTime: "22:00:00",
+          defaultView: 'agendaWeek',
+          weekMode:'liquid',
+          weekends: false,
           defaultDate: '2016-03-30',
           editable: true,
           eventLimit: true, // allow "more" link when too many events
           events: {
-            url: 'data',
+            url: '/scheduleData',
             error: function() {
               $('#script-warning').show();
             }
@@ -34,6 +39,31 @@
             $('#loading').toggle(bool);
           }
         });
+      });
+
+      // Schedule to repeat for every week
+      $('#calendar').fullCalendar('addEventSource', function(start, end, callback) {
+        var events = [];
+        var monday = 1;
+        var one_day = (24 * 60 * 60 * 1000);
+
+        for (loop = start.getTime();
+             loop <= end.getTime();
+             loop = loop + one_day) {
+
+            var column_date = new Date(loop);
+
+            if (column_date.getDay() == monday) {
+                // we're in Moday, create the event
+                events.push({
+                    title: 'Morning Meeting',
+                    start: new Date(column_date.setHours(10, 00)),
+                    end: new Date(column_date.setHours(10, 40)),
+                    allDay: false
+                });
+            }
+          callback( events );
+        }
       });
     </script>
     <style>

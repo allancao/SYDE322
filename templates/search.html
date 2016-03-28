@@ -37,6 +37,7 @@
           <input type="startTime" name="startTime" id="startTime" class="form-control" placeholder="Start Time (00:00)" required>
           <label for="endTime" class="sr-only">End Time</label>
           <input type="endTime" name="endTime" id="endTime" class="form-control" placeholder="End Time (23:59)" required>
+          <!---
           <div class="container">
             <div class="row">
                 <label class="col-md-12 control-label" for="checkboxes">Day(s) of  Week</label>
@@ -66,12 +67,19 @@
               </div>
             </div>
           </div>
+          -->
           <button id="btnSearch" class="btn btn-lg btn-primary btn-block" type="button">Search</button>
         </form>
       </div>
-
-
-
+      <div>
+        <table class="courses-table" style="width:100%; display:none;align:center" >
+          <tr>
+            <th> Course Name </th>
+            <th> Start Time </th>
+            <th> End Time </th>
+          </tr>
+        </table>
+      </div>
       <footer class="footer">
         <p>&copy; ABC 2016</p>
       </footer>
