@@ -4,10 +4,6 @@ import Course
 import CourseSchedule
 import UWAccount
 
-uw_courses = 'uwcoursedb.uwcourses'
-uw_course_schedule = 'uwcoursedb.courseschedule'
-uw_accounts = 'uwcoursedb.uwaccounts'
-
 
 def sanitate(values):
     ret = []
@@ -17,7 +13,8 @@ def sanitate(values):
 
 
 def get_course(course_id=None, subject=None, catalog_number=None,
-               title=None, description=None, prerequisites=None):
+               title=None, description=None, prerequisites=None,
+               db_table='uwcoursedb.uwcourses'):
 
     values = filter(None, [course_id, subject,
                            catalog_number, title, description, prerequisites])
@@ -37,7 +34,7 @@ def get_course(course_id=None, subject=None, catalog_number=None,
         cols_values.append('prerequisites')
 
     values = sanitate(values)
-    rows = UWDB.select(uw_courses, cols_values, values)
+    rows = UWDB.select(db_table, cols_values, values)
     rows = ['' if x is None else x for x in rows]
     ret = []
 
@@ -51,7 +48,8 @@ def get_course(course_id=None, subject=None, catalog_number=None,
 
 def get_course_schedule(subject=None, catalog_number=None, section=None,
                         start_time=None, end_time=None, weekdays=None,
-                        start_date=None, end_date=None):
+                        start_date=None, end_date=None,
+                        db_table='uwcoursedb.courseschedule'):
     values = filter(None, [subject, catalog_number, section, start_time,
                            end_time, weekdays, start_date, end_date])
 
@@ -68,14 +66,14 @@ def get_course_schedule(subject=None, catalog_number=None, section=None,
     if end_time:
         cols_values.append('end_time')
     if weekdays:
-        cols_values.append('end_time')
+        cols_values.append('weekdays')
     if start_date:
-        cols_values.append('end_time')
+        cols_values.append('start_date')
     if end_date:
-        cols_values.append('end_time')
+        cols_values.append('end_date')
 
     values = sanitate(values)
-    rows = UWDB.select(uw_course_schedule, cols_values, values)
+    rows = UWDB.select(db_table, cols_values, values)
     rows = ['' if x is None else x for x in rows]
     ret = []
 
@@ -88,7 +86,8 @@ def get_course_schedule(subject=None, catalog_number=None, section=None,
 
 
 def get_account_courses(student_id=None, subject=None, catalog_number=None,
-                        section=None, first_name=None, last_name=None):
+                        section=None, first_name=None, last_name=None,
+                        db_table='uwcoursedb.uwaccounts'):
     values = filter(None, [student_id, subject, catalog_number,
                            section, first_name, last_name])
 
@@ -108,7 +107,7 @@ def get_account_courses(student_id=None, subject=None, catalog_number=None,
         cols_values.append('last_name')
 
     values = sanitate(values)
-    rows = UWDB.select(uw_accounts, cols_values, values)
+    rows = UWDB.select(db_table, cols_values, values)
     rows = ['' if x is None else x for x in rows]
     ret = []
 
@@ -121,7 +120,8 @@ def get_account_courses(student_id=None, subject=None, catalog_number=None,
 
 
 def insert_account_courses(student_id=None, subject=None, catalog_number=None,
-                           section=None, first_name=None, last_name=None):
+                           section=None, first_name=None, last_name=None,
+                           db_table='uwcoursedb.uwaccounts'):
 
     values = filter(None, [student_id, subject, catalog_number,
                            section, first_name, last_name])
@@ -142,11 +142,12 @@ def insert_account_courses(student_id=None, subject=None, catalog_number=None,
         cols_values.append('last_name')
 
     values = sanitate(values)
-    UWDB.insert(uw_accounts, cols_values, values)
+    UWDB.insert(db_table, cols_values, values)
 
 
 def delete_account_courses(student_id=None, subject=None, catalog_number=None,
-                           section=None, first_name=None, last_name=None):
+                           section=None, first_name=None, last_name=None,
+                           db_table='uwcoursedb.uwaccounts'):
 
     values = filter(None, [student_id, subject, catalog_number,
                            section, first_name, last_name])
@@ -167,11 +168,17 @@ def delete_account_courses(student_id=None, subject=None, catalog_number=None,
         cols_values.append('last_name')
 
     values = sanitate(values)
-    UWDB.delete(uw_accounts, cols_values, values)
+    UWDB.delete(db_table, cols_values, values)
 
 
 # insert_account_courses(student_id='20420902', subject='SYDE', catalog_number='322',
-                       # section='LEC 001', first_name='Allan', last_name='Cao')
+#                        section='LEC 001', first_name='Allan', last_name='Cao')
+#
+# list = get_account_courses(student_id='20420902')
+# for i in list:
+#     print(i)
+#
+# delete_account_courses(student_id='20420902')
 
 # list = get_account_courses(student_id='20420902')
 # for i in list:
