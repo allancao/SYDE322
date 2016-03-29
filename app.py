@@ -1,12 +1,14 @@
 from flask import Flask
 from flask import request, render_template, jsonify, url_for, redirect, make_response
 import json
+import pickle
 import UWSchedulerService
 
 app = Flask(__name__)
 
 global data
-
+global scheduleObj
+scheduleObj= "[{'start_time': '15:30', 'days': 'Tuesday', 'end_time': '17:20', 'title': 'SYDE 322 LEC 001'}]"
 
 @app.route('/')
 def login():
@@ -27,25 +29,15 @@ def loginUser():
 def search():
     return render_template('search.html')
 
-@app.route('/schedule')
-def show_schedule():
-  return render_template('schedule.html')
-
-@app.route('/scheduleData')
-def formulate_data():
-  return json.dumps(data)
-
 @app.route('/searchResult', methods=['POST'])
 def search_result():
+  data = []
   _subject = str(request.form['subject'])
   _catalogNo = str(request.form['catalogNo'])
   _startTime = str(request.form['startTime'])
   _endTime = str(request.form['endTime'])
-  # _days = str(request.form.getlist('check'))
 
-  # getSchedule  = UWSchedulerService.get_course_schedule(subject = _subject, catalog_number = _catalogNo)
   getCoursesByTime = UWSchedulerService.get_course_schedule_by_time(subject = _subject, catalog_number = _catalogNo, start_time = _startTime, end_time = _endTime)
-  data = []
 
   for i in getCoursesByTime:
     info = ''
@@ -74,19 +66,45 @@ def search_result():
     		first = False
     		dayz = dayz + day
     	else:
-    		dayz = dayz + ',' + day
-
+    		dayz = dayz + ', ' + day
     info = i.subject + ' ' + i.catalog_number + ' ' + i.section
 
     course_info = {"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz};
     data.append(course_info)
-    # course_info = json.dumps({"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz},sort_keys=True, indent=4)
-    # data.append(course_info)
-
   print data
   return json.dumps(data)
 
+@app.route('/schedule')
+def show_schedule():
+  return render_template('schedule.html')
+
+@app.route('/scheduleData', methods=['POST'])
+def get():
+   _myArray = request.form['myArray']
+   scheduleObj = _myArray
+   return scheduleObj
+
+@app.route('/data')
+def formulate_schedule():
+  with open("events.json", "r") as input_data:
+    return input_data.read()
+
+# formulate_schedule()
 if __name__ == '__main__':
     app.run()
+
+  # start_date = request.args.get('start', '')
+  # # end_date = request.args.get('end', '')
+
+  # newobj = pickle.loads(scheduleObj)
+  # for obj in newobj:
+  #   print obj
+  # # calObj = {
+  # #   "title": "SYDE 322 LEC 001",
+  # #   "start": "2016-03-29T15:30:00",
+  # #   "end": "2016-03-29T17:20:00"
+  # # }
+  # return jsonify(newobj)
+
 
 

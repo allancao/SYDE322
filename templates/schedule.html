@@ -20,17 +20,17 @@
             left: 'prev,next today',
             center: 'title',
           },
-          allDaySlot: 'false',
-          minTime: "08:00:00",
-          maxTime: "22:00:00",
+          allDaySlot: false,
+          minTime: "12:00:00",
+          maxTime: "21:00:00",
           defaultView: 'agendaWeek',
           weekMode:'liquid',
           weekends: false,
           defaultDate: '2016-03-30',
-          editable: true,
+          editable: false,
           eventLimit: true, // allow "more" link when too many events
           events: {
-            url: '/scheduleData',
+            url: '/data',
             error: function() {
               $('#script-warning').show();
             }
@@ -39,31 +39,6 @@
             $('#loading').toggle(bool);
           }
         });
-      });
-
-      // Schedule to repeat for every week
-      $('#calendar').fullCalendar('addEventSource', function(start, end, callback) {
-        var events = [];
-        var monday = 1;
-        var one_day = (24 * 60 * 60 * 1000);
-
-        for (loop = start.getTime();
-             loop <= end.getTime();
-             loop = loop + one_day) {
-
-            var column_date = new Date(loop);
-
-            if (column_date.getDay() == monday) {
-                // we're in Moday, create the event
-                events.push({
-                    title: 'Morning Meeting',
-                    start: new Date(column_date.setHours(10, 00)),
-                    end: new Date(column_date.setHours(10, 40)),
-                    allDay: false
-                });
-            }
-          callback( events );
-        }
       });
     </script>
     <style>
@@ -114,13 +89,10 @@
       </div>
 
       <div class="jumbotron">
-        <h1>View Schedule</h1>
+        <h2>View Schedule</h2>
 
         <div id='calendar'></div>
       </div>
-
-
-
       <footer class="footer">
         <p>&copy; ABC 2016</p>
       </footer>

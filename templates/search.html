@@ -2,19 +2,28 @@
 <html lang="en">
   <head>
     <title>Search for Classes</title>
+    <meta charset='utf-8' />
+    <link href="{{ url_for('static', filename='fullcalendar.min.css') }}" rel='stylesheet' />
+    <link href="{{ url_for('static', filename='fullcalendar.print.css') }}" rel='stylesheet' media='print' />
 
+    <script src="{{ url_for('static', filename='lib/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='fullcalendar.min.js') }}"></script>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/search.css" rel="stylesheet">
-    <script src="../static/js/jquery-1.12.2.js"></script>
     <script src="../static/js/search.js"></script>
+    <script src="../static/js/sweet-alert.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/sweet-alert.css">
 
   </head>
 
   <body>
-
+    <form>
+      <input type="hidden" id="hiddenObj"> </input>
+    </form>
     <div class="container">
       <div class="header">
         <nav>
@@ -72,7 +81,7 @@
         </form>
       </div>
       <div>
-        <table class="courses-table" style="width:100%; display:none;" >
+        <table id="classes" class="courses-table" style="width:100%; display:none;" >
           <tr align="center">
             <th> Course Name </th>
             <th> Day </th>
@@ -81,6 +90,7 @@
             <th> </th>
           </tr>
         </table>
+        <button id="saveClasses" class="btn btn-block" type="button" style="display:none"> Save Classes </button>
       </div>
       <footer class="footer">
         <p>&copy; ABC 2016</p>
