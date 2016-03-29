@@ -33,7 +33,7 @@ def show_schedule():
 
 @app.route('/scheduleData')
 def formulate_data():
-    return json.dumps(data)
+  return json.dumps(data)
 
 @app.route('/searchResult', methods=['POST'])
 def search_result():
@@ -78,7 +78,7 @@ def search_result():
 
     info = i.subject + ' ' + i.catalog_number + ' ' + i.section
 
-    course_info = {"title":info, "start_time":i.start_time, "end_time":i.end_time};
+    course_info = {"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz};
     data.append(course_info)
     # course_info = json.dumps({"title":info, "start_time":i.start_time, "end_time":i.end_time, "days":dayz},sort_keys=True, indent=4)
     # data.append(course_info)

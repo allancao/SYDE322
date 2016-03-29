@@ -5,7 +5,6 @@ import CourseSchedule
 import UWAccount
 import datetime
 
-
 def sanitate(values):
     ret = []
     for i in range(0, len(values)):
@@ -129,8 +128,11 @@ def get_course_schedule_by_time(subject=None, catalog_number=None, section=None,
                                section=section, weekdays=weekdays,
                                start_date=start_date, end_date=end_date,
                                db_table=db_table)
-
     # ret = temp
+    if not start_time:
+        start_time ='00:00'
+    if not end_time:
+        end_time = '23:59'
 
     time_format = '%H:%M'
     target_start_time = datetime.datetime.strptime(start_time, time_format)
@@ -218,7 +220,7 @@ def delete_account_courses(student_id=None, subject=None, catalog_number=None,
 #                        section='LEC 001', first_name='Allan', last_name='Cao')
 
 list = get_course_schedule_by_time(subject='SYDE', catalog_number='322', section=None,
-                                   start_time='14:20', end_time='18:59', weekdays=None,
+                                   start_time='12:30', end_time='16:30', weekdays=None,
                                    start_date=None, end_date=None)
 
 for i in list:
